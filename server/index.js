@@ -83,11 +83,9 @@ app.post("/users/register", async (req, res) => {
 
 app.patch("/users/:id", async (req, res) => {
     console.log("PATCH request body: ", req.body);
-    const {patchType, username,id}=req.body;
-
+    const {patchType, changeValue,id}=req.body;
     try {
-        const result = await db.query(`UPDATE users SET ${patchType}=$1 WHERE id=$2`, [username, id]);
-        console.log("User updates. Username:", username, " , ", "id:", id);
+        const result = await db.query(`UPDATE users SET ${patchType}=$1 WHERE id=$2`, [changeValue, id]);
         res.status(200).json({
             success: true,
             message: "User updated"
