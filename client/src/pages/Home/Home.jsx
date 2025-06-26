@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [userName, setUserName] = useState('');
-  const [id, setId]=useState(null);
+  const [id, setId] = useState(null);
   const [password, setPassword] = useState('');
-
+  //input values
   const [usernameInput, setInputName] = useState('');
+  const [passwordInput, setInputPassword] = useState('');
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   const navigate = useNavigate();
@@ -48,13 +50,26 @@ function Home() {
     const res = await fetch(`http://localhost:3000/users/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ patchType:'username', username:usernameInput, id}),
+      body: JSON.stringify({ patchType: 'username', changeValue: usernameInput, id }),
     });
     setUserName(usernameInput);
     setInputName('');
     console.log("response from server:");
     console.log(res);
     window.alert("User name updated");
+  }
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    const res = await fetch(`http://localhost:3000/users/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ patchType: 'password', changeValue:password, id }),
+    });
+    setPassword('');
+    console.log("response from server:");
+    console.log(res);
+    window.alert("Password updated");
   }
 
   return (
@@ -69,7 +84,7 @@ function Home() {
             <button className='edit-btn'>OK</button>
           </div>
         </form>
-        <form>
+        <form onSubmit={handleUpdatePassword}>
           <div className='edit-input-container'>
             <input type="password" name="password" placeholder="Change password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             <button className='edit-btn'>OK</button>

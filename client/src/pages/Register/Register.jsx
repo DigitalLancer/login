@@ -33,6 +33,7 @@ function Register() {
 
     return (
         <div className='page-container'>
+            <button className='back-btn' onClick={()=>navigate('/')}>Back to Login</button>
             <div className='register-container'>
                 <h1>Sign Up</h1>
                 <form onSubmit={handleRegister}>
